@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+# copy config files
+[[ ! -f /config/settings.js ]] ; \
+	cp -pr /defaults/settings.js /config/settings.js
+
+# permissions
+chown -R abc:abc \
+	/app/qwebserver \
+	/config
