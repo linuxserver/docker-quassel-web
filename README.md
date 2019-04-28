@@ -53,8 +53,6 @@ docker create \
   --name=quassel-web \
   -e PUID=1000 \
   -e PGID=1000 \
-  -e PUID=<yourUID> \
-  -e PGID=<yourGID> \
   -e QUASSEL_CORE=192.168.1.10 \
   -e QUASSEL_PORT=4242 \
   -e URL_BASE=/quassel \
@@ -82,8 +80,6 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - PUID=<yourUID>
-      - PGID=<yourGID>
       - QUASSEL_CORE=192.168.1.10
       - QUASSEL_PORT=4242
       - URL_BASE=/quassel
@@ -107,8 +103,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-p 64443` | will map the container's port 64443 to port 64443 on the host |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
-| `-e PUID=<yourUID>` | specify your UID |
-| `-e PGID=<yourGID>` | specify your GID |
 | `-e QUASSEL_CORE=192.168.1.10` | specify the URL or IP address of your Quassel Core instance |
 | `-e QUASSEL_PORT=4242` | specify the port of your Quassel Core instance |
 | `-e URL_BASE=/quassel` | Specify a url-base in reverse proxy setups ie. `/quassel` |

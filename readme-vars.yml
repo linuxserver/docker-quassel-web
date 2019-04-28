@@ -21,13 +21,11 @@ param_volumes:
   - { vol_path: "/config", vol_host_path: "<path to data>", desc: "this will store config on the docker host" }
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "PUID", env_value: "<yourUID>", desc: "specify your UID" }
-  - { env_var: "PGID", env_value: "<yourGID>", desc: "specify your GID" }
   - { env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance" }
   - { env_var: "QUASSEL_PORT", env_value: "4242", desc: "specify the port of your Quassel Core instance" }
   - { env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`" }
-  - { env_var: "HTTPS", env_value: "true", desc: "specify true to use https on 64443 or false to use http on 64080" }
-  - { env_var: "FORCE_DEFAULT", env_value: "false", desc: "specify true to use only the default instance of Quassel Core specified above" }  
+  - { env_var: "HTTPS", env_value: "true", desc: "specify `true` to use https on `64443` or false to use http on `64080`" }
+  - { env_var: "FORCE_DEFAULT", env_value: "false", desc: "specify `true` to use only the default instance of Quassel Core specified above" }  
 
 param_usage_include_ports: true
 param_ports:
@@ -37,7 +35,7 @@ param_ports:
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
+  By default this container webui will be available on `https://$SERVER_IP:64443`.  To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
 # changelog
 changelogs:
 - { date: "28.04.19:", desc: "Initial Release." }
