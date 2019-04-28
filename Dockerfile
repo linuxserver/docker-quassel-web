@@ -10,6 +10,7 @@ LABEL maintainer="chbmb"
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
+    curl \
 	git && \
  echo "**** install runtime packages ****" && \
  apk add --no-cache \
