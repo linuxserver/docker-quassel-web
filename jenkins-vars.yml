@@ -1,0 +1,29 @@
+---
+
+# jenkins variables - read documentation in https://github.com/linuxserver/pipeline-triggers for more info
+project_name: docker-quassel-web
+external_type: github_commit
+release_type: stable
+release_tag: latest
+ls_branch: master
+repo_vars:
+  - EXT_GIT_BRANCH = 'master'
+  - EXT_USER = 'magne4000'
+  - EXT_REPO = 'quassel-webserver'
+  - BUILD_VERSION_ARG = 'QUASSEL-WEB_COMMIT'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-quassel-web'
+  - CONTAINER_NAME = 'quassel-web'
+  - DOCKERHUB_IMAGE = 'linuxserver/quassel-web'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/quassel-web'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/quassel-web'
+  - DIST_IMAGE = 'alpine'
+  - MULTIARCH = 'true'
+  - CI = 'true'
+  - CI_WEB = 'true'
+  - CI_PORT = '64443'
+  - CI_SSL = 'true'
+  - CI_DELAY = '120'
+  - CI_DOCKERENV = 'TZ=Europe/London'
+  - CI_AUTH = 'user:password'
+  - CI_WEBPATH = ''
