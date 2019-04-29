@@ -1,0 +1,41 @@
+---
+
+# project information
+project_name: quassel-web
+project_url: "https://github.com/magne4000/quassel-webserver"
+project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/quassel-web-banner.png"
+project_blurb: |
+  [{{ project_name|capitalize }}]({{ project_url }}) is a web client for Quassel.  Note that a Quassel-Core instance is required, we have a container available [here.](https://hub.docker.com/r/linuxserver/quassel-core/) 
+project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+
+# supported architectures
+available_architectures:
+  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
+  - { arch: "{{ arch_armhf }}", tag: "arm32v6-latest"}
+
+# container parameters
+param_container_name: "{{ project_name }}"
+param_usage_include_vols: true
+param_volumes:
+  - { vol_path: "/config", vol_host_path: "<path to data>", desc: "this will store config on the docker host" }
+param_usage_include_env: true
+param_env_vars:
+  - { env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance" }
+  - { env_var: "QUASSEL_PORT", env_value: "4242", desc: "specify the port of your Quassel Core instance" }
+  - { env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`" }
+  - { env_var: "HTTPS", env_value: "true", desc: "specify `true` to use https on `64443` or false to use http on `64080`" }
+  - { env_var: "FORCE_DEFAULT", env_value: "false", desc: "specify `true` to use only the default instance of Quassel Core specified above" }  
+
+param_usage_include_ports: true
+param_ports:
+  - { external_port: "64080", internal_port: "64080", port_desc: "will map the container's port 64080 to port 64080 on the host" }
+  - { external_port: "64443", internal_port: "64443", port_desc: "will map the container's port 64443 to port 64443 on the host" }
+
+# application setup block
+app_setup_block_enabled: true
+app_setup_block: |
+  By default this container webui will be available on `https://$SERVER_IP:64443`.  To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
+# changelog
+changelogs:
+- { date: "28.04.19:", desc: "Initial Release." }
