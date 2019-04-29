@@ -106,8 +106,8 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e QUASSEL_CORE=192.168.1.10` | specify the URL or IP address of your Quassel Core instance |
 | `-e QUASSEL_PORT=4242` | specify the port of your Quassel Core instance |
 | `-e URL_BASE=/quassel` | Specify a url-base in reverse proxy setups ie. `/quassel` |
-| `-e HTTPS=true` | specify true to use https on 64443 or false to use http on 64080 |
-| `-e FORCE_DEFAULT=false` | specify true to use only the default instance of Quassel Core specified above |
+| `-e HTTPS=true` | specify `true` to use https on `64443` or false to use http on `64080` |
+| `-e FORCE_DEFAULT=false` | specify `true` to use only the default instance of Quassel Core specified above |
 | `-v /config` | this will store config on the docker host |
 
 ## User / Group Identifiers
@@ -127,7 +127,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 &nbsp;
 ## Application Setup
 
-By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
+By default this container webui will be available on `https://$SERVER_IP:64443`.  To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
 
 
 
