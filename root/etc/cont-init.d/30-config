@@ -1,10 +1,47 @@
 #!/usr/bin/with-contenv bash
 
 # copy config files
-[[ ! -f /config/settings.js ]] ; \
-	cp -pr /defaults/settings.js /config/settings.js
+[[ ! -f /config/settings-user.js ]] ; \
+	cp -pr /defaults/settings.js /config/settings-user.js
+
+# add possibility to use env variables
+[[ "${QUASSEL_CORE}" ]] && \
+        sed -i "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
+            /config/settings-user.js
+
+[[ "${QUASSEL_PORT}" ]] && \
+        sed -i "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
+            /config/settings-user.js
+
+[[ "${URL_BASE}" ]] && \
+        sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
+            /config/settings-user.js
+
+if [ "${FORCE_DEFAULT}" == "true" ];then
+        sed -i "s#forcedefault:.*//#forcedefault: true, //#g" \
+            /config/settings-user.js
+fi
+
+if [ "${FORCE_DEFAULT}" == "false" ];then
+        sed -i "s#forcedefault:.*//#forcedefault: false, //#g" \
+            /config/settings-user.js
+fi
+
+if [ "${HTTPS}" == "true" ];then
+        sed -i "s#mode:.*//#mode: 'https', //#g" \
+            /config/settings-user.js && \
+        sed -i "s#port:.*// Port on which to listen#port: 64443, // Port on which to listen#g" \
+            /config/settings-user.js
+fi
+            
+if [ "${HTTPS}" == "false" ];then
+        sed -i "s#mode:.*//#mode: 'http', //#g" \
+            /config/settings-user.js && \
+        sed -i "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
+            /config/settings-user.js
+fi
 
 # permissions
 chown -R abc:abc \
-	/app/qwebserver \
+	/app/quassel-web \
 	/config

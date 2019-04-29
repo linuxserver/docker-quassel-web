@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-cd /app/qwebserver || true
-
-exec \
-	s6-setuidgid abc node app.js -c /config/settings.js
