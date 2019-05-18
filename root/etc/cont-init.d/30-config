@@ -1,11 +1,11 @@
 #!/usr/bin/with-contenv bash
 
 # copy settings-user.js if doesn't exist
-[[ ! -f /config/settings-user.js ]] ; \
+[[ ! -f /config/settings-user.js ]] && \
 	cp -pr /app/quassel-web/settings.js /config/settings-user.js
 
 # Fresh settings-env.js if using env variable
-[[ -f /app/quassel-web/settings-env.js ]] ; \
+[[ -f /app/quassel-web/settings-env.js ]] && \
     rm /app/quassel-web/settings-env.js
 
 # Copy settings to be used for env variables
