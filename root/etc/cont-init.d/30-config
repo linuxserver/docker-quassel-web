@@ -2,11 +2,14 @@
 
 # copy settings-user.js if doesn't exist
 [[ ! -f /config/settings-user.js ]] ; \
-	cp -pr /defaults/settings.js /config/settings-user.js
+	cp -pr /app/quassel-web/settings.js /config/settings-user.js
 
 # Fresh settings-env.js if using env variable
-rm /app/quassel-web/settings-env.js && \
-    cp -pr /defaults/settings.js /app/quassel-web/settings-env.js
+[[ -f /app/quassel-web/settings-env.js ]] ; \
+    rm /app/quassel-web/settings-env.js
+
+# Copy settings to be used for env variables
+cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
 
 # add possibility to use env variables
 [[ "${QUASSEL_CORE}" ]] && \
