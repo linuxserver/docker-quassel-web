@@ -1,44 +1,48 @@
 #!/usr/bin/with-contenv bash
 
-# copy config files
+# copy settings-user.js if doesn't exist
 [[ ! -f /config/settings-user.js ]] ; \
 	cp -pr /defaults/settings.js /config/settings-user.js
+
+# Fresh settings-env.js if using env variable
+rm /app/quassel-web/settings-env.js && \
+    cp -pr /defaults/settings.js /app/quassel-web/settings-env.js
 
 # add possibility to use env variables
 [[ "${QUASSEL_CORE}" ]] && \
         sed -i "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 
 [[ "${QUASSEL_PORT}" ]] && \
         sed -i "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 
 [[ "${URL_BASE}" ]] && \
         sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 
 if [ "${FORCE_DEFAULT}" == "true" ];then
         sed -i "s#forcedefault:.*//#forcedefault: true, //#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 fi
 
 if [ "${FORCE_DEFAULT}" == "false" ];then
         sed -i "s#forcedefault:.*//#forcedefault: false, //#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 fi
 
 if [ "${HTTPS}" == "true" ];then
         sed -i "s#mode:.*//#mode: 'https', //#g" \
-            /config/settings-user.js && \
+            /app/quassel-web/settings-env.js && \
         sed -i "s#port:.*// Port on which to listen#port: 64443, // Port on which to listen#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 fi
             
 if [ "${HTTPS}" == "false" ];then
         sed -i "s#mode:.*//#mode: 'http', //#g" \
-            /config/settings-user.js && \
+            /app/quassel-web/settings-env.js && \
         sed -i "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
-            /config/settings-user.js
+            /app/quassel-web/settings-env.js
 fi
 
 # permissions

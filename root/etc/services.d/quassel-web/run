@@ -4,3 +4,11 @@ cd /app/quassel-web || true
 
 exec \
 	s6-setuidgid abc node app.js -c /config/settings-user.js
+
+if [ "$ADVANCED" == "true" ]; then
+    exec \
+        s6-setuidgid abc node app.js -c /config/settings-user.js
+else
+    exec \
+        s6-setuidgid abc node app.js -c /app/quassel-web/settings-env.js
+fi
