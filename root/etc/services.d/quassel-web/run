@@ -1,14 +1,13 @@
 #!/usr/bin/with-contenv bash
 
 cd /app/quassel-web || true
+# determine config file to use
+if [ -f "/app/quassel-web/settings-env.js" ] && \
+   [ "${QUASSEL_CORE+x}" ]; then
+  CONFIG="/app/quassel-web/settings-env.js"
+else
+  CONFIG="/config/settings-user.js"
+fi
 
 exec \
-	s6-setuidgid abc node app.js -c /config/settings-user.js
-
-if [ "$ADVANCED" == "true" ]; then
-    exec \
-        s6-setuidgid abc node app.js -c /config/settings-user.js
-else
-    exec \
-        s6-setuidgid abc node app.js -c /app/quassel-web/settings-env.js
-fi
+  s6-setuidgid abc node app.js -c "${CONFIG}"

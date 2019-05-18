@@ -1,54 +1,52 @@
 #!/usr/bin/with-contenv bash
 
-# copy settings-user.js if doesn't exist
-[[ ! -f /config/settings-user.js ]] && \
-	cp -pr /app/quassel-web/settings.js /config/settings-user.js
-
-# Fresh settings-env.js if using env variable
-[[ -f /app/quassel-web/settings-env.js ]] && \
-    rm /app/quassel-web/settings-env.js
-
-# Copy settings to be used for env variables
-cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
-
-# add possibility to use env variables
-[[ "${QUASSEL_CORE}" ]] && \
-        sed -i "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
-            /app/quassel-web/settings-env.js
-
-[[ "${QUASSEL_PORT}" ]] && \
-        sed -i "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
-            /app/quassel-web/settings-env.js
-
-[[ "${URL_BASE}" ]] && \
-        sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
-            /app/quassel-web/settings-env.js
-
-if [ "${FORCE_DEFAULT}" == "true" ];then
-        sed -i "s#forcedefault:.*//#forcedefault: true, //#g" \
-            /app/quassel-web/settings-env.js
-fi
-
-if [ "${FORCE_DEFAULT}" == "false" ];then
-        sed -i "s#forcedefault:.*//#forcedefault: false, //#g" \
-            /app/quassel-web/settings-env.js
-fi
-
-if [ "${HTTPS}" == "true" ];then
-        sed -i "s#mode:.*//#mode: 'https', //#g" \
-            /app/quassel-web/settings-env.js && \
-        sed -i "s#port:.*// Port on which to listen#port: 64443, // Port on which to listen#g" \
-            /app/quassel-web/settings-env.js
-fi
-            
-if [ "${HTTPS}" == "false" ];then
-        sed -i "s#mode:.*//#mode: 'http', //#g" \
-            /app/quassel-web/settings-env.js && \
-        sed -i "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
-            /app/quassel-web/settings-env.js
+# The user has defined QUASSEL_CORE use env settings
+if [ "${QUASSEL_CORE+x}" ]; then
+  echo "[cont-init.d] QUASSEL_CORE set, injecting env variables into settings.js"
+  # Env variable validation
+  VARS=( \
+  QUASSEL_PORT \
+  FORCE_DEFAULT \
+  HTTPS
+  )
+  for i in "${VARS[@]}"; do
+    if [ -z ${!i+x} ]; then
+      echo "[cont-init.d] ${i} is required to setup container with env variables falling back to config file"
+      [[ ! -f /config/settings-user.js ]] && \
+        cp -pr /app/quassel-web/settings.js /config/settings-user.js
+      exit 0
+    fi
+  done
+  cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
+  # Env variable injection
+    sed -i \
+      -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
+      -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
+      -e "s#forcedefault:.*//#forcedefault: true, //#g" \
+      /app/quassel-web/settings-env.js && \
+  [[ "${URL_BASE+x}" ]] && \
+    sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
+    /app/quassel-web/settings-env.js
+  if [ "${HTTPS}" == "true" ];then
+    sed -i \
+      -e "s#mode:.*//#mode: 'https', //#g" \
+      -e "s#port:.*// Port on which to listen#port: 64443, // Port on which to listen#g" \
+      /app/quassel-web/settings-env.js
+  else
+    sed -i \
+      -e "s#mode:.*//#mode: 'http', //#g" \
+      -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
+      /app/quassel-web/settings-env.js
+  fi
+# The user is not using env variables copy a default file if it does not exist
+else
+  [[ ! -f /config/settings-user.js ]] && \
+    echo "[cont-init.d] QUASSEL_CORE is not set, you will need to manually modify /config/settings-user.js"
+    cp -pr /app/quassel-web/settings.js /config/settings-user.js
 fi
 
 # permissions
+echo "[cont-init.d] setting file permissions this may take some time ..."
 chown -R abc:abc \
-	/app/quassel-web \
-	/config
+  /app/quassel-web \
+  /config
