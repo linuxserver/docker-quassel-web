@@ -38,12 +38,12 @@ if [ "${QUASSEL_CORE+x}" ]; then
     /app/quassel-web/settings-env.js
   if [ "${HTTPS}" == "true" ];then
     sed -i \
-      -e "s#mode:.*//#mode: 'https', //#g" \
+      -e "s#mode:.*// can be 'http'#mode: 'https', // can be 'http'#g" \
       -e "s#port:.*// Port on which to listen#port: 64443, // Port on which to listen#g" \
       /app/quassel-web/settings-env.js
   else
     sed -i \
-      -e "s#mode:.*//#mode: 'http', //#g" \
+      -e "s#mode:.*// can be 'http'#mode: 'http', // can be 'http'#g" \
       -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
       /app/quassel-web/settings-env.js
   fi
