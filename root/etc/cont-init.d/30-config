@@ -1,5 +1,13 @@
 #!/usr/bin/with-contenv bash
 
+# permissions function
+chownfiles () {
+  echo "[cont-init.d] setting file permissions this may take some time ..."
+  chown -R abc:abc \
+    /app/quassel-web \
+    /config
+}
+
 # The user has defined QUASSEL_CORE use env settings
 if [ "${QUASSEL_CORE+x}" ]; then
   echo "[cont-init.d] QUASSEL_CORE set, injecting env variables into settings.js"
@@ -14,6 +22,7 @@ if [ "${QUASSEL_CORE+x}" ]; then
       echo "[cont-init.d] ${i} is required to setup container with env variables falling back to config file"
       [[ ! -f /config/settings-user.js ]] && \
         cp -pr /app/quassel-web/settings.js /config/settings-user.js
+      chownfiles
       exit 0
     fi
   done
@@ -45,8 +54,4 @@ else
     cp -pr /app/quassel-web/settings.js /config/settings-user.js
 fi
 
-# permissions
-echo "[cont-init.d] setting file permissions this may take some time ..."
-chown -R abc:abc \
-  /app/quassel-web \
-  /config
+chownfiles
