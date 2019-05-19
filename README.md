@@ -55,11 +55,8 @@ docker create \
   -e PGID=1000 \
   -e QUASSEL_CORE=192.168.1.10 \
   -e QUASSEL_PORT=4242 \
-  -e HTTPS=false \
-  -e FORCE_DEFAULT=true \
   -e URL_BASE=/quassel `#optional` \
   -p 64080:64080 \
-  -p 64443:64443 \
   -v <path to data>:/config \
   --restart unless-stopped \
   linuxserver/quassel-web
@@ -82,14 +79,11 @@ services:
       - PGID=1000
       - QUASSEL_CORE=192.168.1.10
       - QUASSEL_PORT=4242
-      - HTTPS=false
-      - FORCE_DEFAULT=true
       - URL_BASE=/quassel #optional
     volumes:
       - <path to data>:/config
     ports:
       - 64080:64080
-      - 64443:64443
     restart: unless-stopped
 ```
 
@@ -100,13 +94,10 @@ Container images are configured using parameters passed at runtime (such as thos
 | Parameter | Function |
 | :----: | --- |
 | `-p 64080` | will map the container's port 64080 to port 64080 on the host |
-| `-p 64443` | will map the container's port 64443 to port 64443 on the host |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e QUASSEL_CORE=192.168.1.10` | specify the URL or IP address of your Quassel Core instance |
 | `-e QUASSEL_PORT=4242` | specify the port of your Quassel Core instance |
-| `-e HTTPS=false` | specify `true` to use https on `64443` or false to use http on `64080` |
-| `-e FORCE_DEFAULT=true` | specify `true` to use only the default instance of Quassel Core specified above |
 | `-e URL_BASE=/quassel` | Specify a url-base in reverse proxy setups ie. `/quassel` |
 | `-v /config` | this will store config on the docker host |
 
@@ -127,7 +118,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 &nbsp;
 ## Application Setup
 
-By default this container webui will be available on `http://$SERVER_IP:64080` if `HTTPS` is set to `false` or `https://$SERVER_IP:64443` if `HTTPS` is set to `true`.  To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+By default this container webui will be available on `http://$SERVER_IP:64080`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
 The configuration file using this method can be found at:
 ```
 /config/settings-user.js
