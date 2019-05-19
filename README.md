@@ -127,7 +127,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 &nbsp;
 ## Application Setup
 
-By default this container webui will be available on `http://$SERVER_IP:64080` if `HTTPS` is set to `false` or `https://$SERVER_IP:64443` if `HTTPS` is set to `true`.  To setup this container you can either use the envrionment variables we reccomend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+By default this container webui will be available on `http://$SERVER_IP:64080` if `HTTPS` is set to `false` or `https://$SERVER_IP:64443` if `HTTPS` is set to `true`.  To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
 The configuration file using this method can be found at:
 ```
 /config/settings-user.js
