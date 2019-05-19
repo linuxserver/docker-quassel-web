@@ -23,19 +23,25 @@ param_usage_include_env: true
 param_env_vars:
   - { env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance" }
   - { env_var: "QUASSEL_PORT", env_value: "4242", desc: "specify the port of your Quassel Core instance" }
-  - { env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`" }
-  - { env_var: "HTTPS", env_value: "true", desc: "specify `true` to use https on `64443` or false to use http on `64080`" }
-  - { env_var: "FORCE_DEFAULT", env_value: "false", desc: "specify `true` to use only the default instance of Quassel Core specified above" }  
 
 param_usage_include_ports: true
 param_ports:
   - { external_port: "64080", internal_port: "64080", port_desc: "will map the container's port 64080 to port 64080 on the host" }
-  - { external_port: "64443", internal_port: "64443", port_desc: "will map the container's port 64443 to port 64443 on the host" }
+
+# optional container parameters
+opt_param_usage_include_env: true
+opt_param_env_vars:
+  - { env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`" }
 
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  By default this container webui will be available on `https://$SERVER_IP:64443`.  To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
+  By default this container webui will be available on `http://$SERVER_IP:64080`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+  The configuration file using this method can be found at:
+  ```
+  /config/settings-user.js
+  ```
 # changelog
 changelogs:
+- { date: "18.05.19:", desc: "Reconfigure environmental variable setup." }
 - { date: "28.04.19:", desc: "Initial Release." }

@@ -55,11 +55,8 @@ docker create \
   -e PGID=1000 \
   -e QUASSEL_CORE=192.168.1.10 \
   -e QUASSEL_PORT=4242 \
-  -e URL_BASE=/quassel \
-  -e HTTPS=true \
-  -e FORCE_DEFAULT=false \
+  -e URL_BASE=/quassel `#optional` \
   -p 64080:64080 \
-  -p 64443:64443 \
   -v <path to data>:/config \
   --restart unless-stopped \
   linuxserver/quassel-web
@@ -82,14 +79,11 @@ services:
       - PGID=1000
       - QUASSEL_CORE=192.168.1.10
       - QUASSEL_PORT=4242
-      - URL_BASE=/quassel
-      - HTTPS=true
-      - FORCE_DEFAULT=false
+      - URL_BASE=/quassel #optional
     volumes:
       - <path to data>:/config
     ports:
       - 64080:64080
-      - 64443:64443
     restart: unless-stopped
 ```
 
@@ -100,14 +94,11 @@ Container images are configured using parameters passed at runtime (such as thos
 | Parameter | Function |
 | :----: | --- |
 | `-p 64080` | will map the container's port 64080 to port 64080 on the host |
-| `-p 64443` | will map the container's port 64443 to port 64443 on the host |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e QUASSEL_CORE=192.168.1.10` | specify the URL or IP address of your Quassel Core instance |
 | `-e QUASSEL_PORT=4242` | specify the port of your Quassel Core instance |
 | `-e URL_BASE=/quassel` | Specify a url-base in reverse proxy setups ie. `/quassel` |
-| `-e HTTPS=true` | specify `true` to use https on `64443` or false to use http on `64080` |
-| `-e FORCE_DEFAULT=false` | specify `true` to use only the default instance of Quassel Core specified above |
 | `-v /config` | this will store config on the docker host |
 
 ## User / Group Identifiers
@@ -127,7 +118,11 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 &nbsp;
 ## Application Setup
 
-By default this container webui will be available on `https://$SERVER_IP:64443`.  To setup this container you can either use the environmental variables as specified above and these will overwrite the respective settings in `/config/settings-user.js` or omit the environmental variables and edit `/config/settings-user.js` directly.
+By default this container webui will be available on `http://$SERVER_IP:64080`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+The configuration file using this method can be found at:
+```
+/config/settings-user.js
+```
 
 
 
@@ -154,15 +149,6 @@ Below are the instructions for updating containers:
 * Start the new container: `docker start quassel-web`
 * You can also remove the old dangling images: `docker image prune`
 
-### Via Taisun auto-updater (especially useful if you don't remember the original parameters)
-* Pull the latest image at its tag and replace it with the same env variables in one shot:
-  ```
-  docker run --rm \
-  -v /var/run/docker.sock:/var/run/docker.sock taisun/updater \
-  --oneshot quassel-web
-  ```
-* You can also remove the old dangling images: `docker image prune`
-
 ### Via Docker Compose
 * Update all images: `docker-compose pull`
   * or update a single image: `docker-compose pull quassel-web`
@@ -170,6 +156,36 @@ Below are the instructions for updating containers:
   * or update a single container: `docker-compose up -d quassel-web`
 * You can also remove the old dangling images: `docker image prune`
 
+### Via Watchtower auto-updater (especially useful if you don't remember the original parameters)
+* Pull the latest image at its tag and replace it with the same env variables in one run:
+  ```
+  docker run --rm \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  containrrr/watchtower \
+  --run-once quassel-web
+  ```
+* You can also remove the old dangling images: `docker image prune`
+
+## Building locally
+
+If you want to make local modifications to these images for development purposes or just to customize the logic: 
+```
+git clone https://github.com/linuxserver/docker-quassel-web.git
+cd docker-quassel-web
+docker build \
+  --no-cache \
+  --pull \
+  -t linuxserver/quassel-web:latest .
+```
+
+The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
+```
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+```
+
+Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64`.
+
 ## Versions
 
+* **18.05.19:** - Reconfigure environmental variable setup.
 * **28.04.19:** - Initial Release.
