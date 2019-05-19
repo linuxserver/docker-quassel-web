@@ -14,7 +14,6 @@ if [ "${QUASSEL_CORE+x}" ]; then
   # Env variable validation
   VARS=( \
   QUASSEL_PORT \
-  FORCE_DEFAULT \
   HTTPS
   )
   for i in "${VARS[@]}"; do
