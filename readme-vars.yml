@@ -44,5 +44,5 @@ app_setup_block: |
 # changelog
 changelogs:
   - { date: "28.06.19:", desc: "Rebasing to alpine 3.10." }
-- { date: "18.05.19:", desc: "Reconfigure environmental variable setup." }
-- { date: "28.04.19:", desc: "Initial Release." }
+  - { date: "18.05.19:", desc: "Reconfigure environmental variable setup." }
+  - { date: "28.04.19:", desc: "Initial Release." }
