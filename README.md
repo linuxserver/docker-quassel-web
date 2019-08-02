@@ -56,6 +56,7 @@ docker create \
   -e QUASSEL_CORE=192.168.1.10 \
   -e QUASSEL_PORT=4242 \
   -e URL_BASE=/quassel `#optional` \
+  -e NODE_ENV=production \
   -p 64080:64080 \
   -v <path to data>:/config \
   --restart unless-stopped \
