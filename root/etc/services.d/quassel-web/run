@@ -9,5 +9,5 @@ else
   CONFIG="/config/settings-user.js"
 fi
 
-exec \
+NODE_ENV=production exec \
   s6-setuidgid abc node app.js -c "${CONFIG}"
