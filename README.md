@@ -36,7 +36,7 @@ Find us at:
 [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/quassel-web.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/quassel-web)
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/quassel-web.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/quassel-web)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-quassel-web%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-quassel-web/job/master/)
-[![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Flsio-ci.ams3.digitaloceanspaces.com%2Flinuxserver%2Fquassel-web%2Flatest%2Fci-status.yml)](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/quassel-web/latest/index.html)
+[![LSIO CI](https://img.shields.io/badge/dynamic/yaml?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Fci-tests.linuxserver.io%2Flinuxserver%2Fquassel-web%2Flatest%2Fci-status.yml)](https://ci-tests.linuxserver.io/linuxserver/quassel-web/latest/index.html)
 
 [Quassel-web](https://github.com/magne4000/quassel-webserver) is a web client for Quassel.  Note that a Quassel-Core instance is required, we have a container available [here.](https://hub.docker.com/r/linuxserver/quassel-core/) 
 
@@ -47,7 +47,7 @@ Find us at:
 
 Our images support multiple architectures such as `x86-64`, `arm64` and `armhf`. We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
-Simply pulling `linuxserver/quassel-web` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `ghcr.io/linuxserver/quassel-web` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
@@ -71,7 +71,7 @@ Compatible with docker-compose v2 schemas.
 version: "2.1"
 services:
   quassel-web:
-    image: linuxserver/quassel-web
+    image: ghcr.io/linuxserver/quassel-web
     container_name: quassel-web
     environment:
       - PUID=1000
@@ -99,7 +99,7 @@ docker run -d \
   -p 64080:64080 \
   -v <path to data>:/config \
   --restart unless-stopped \
-  linuxserver/quassel-web
+  ghcr.io/linuxserver/quassel-web
 ```
 
 
@@ -171,7 +171,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * container version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' quassel-web`
 * image version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/quassel-web`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/quassel-web`
 
 ## Updating Info
 
@@ -187,7 +187,7 @@ Below are the instructions for updating containers:
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Run
-* Update the image: `docker pull linuxserver/quassel-web`
+* Update the image: `docker pull ghcr.io/linuxserver/quassel-web`
 * Stop the running container: `docker stop quassel-web`
 * Delete the container: `docker rm quassel-web`
 * Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
@@ -217,7 +217,7 @@ cd docker-quassel-web
 docker build \
   --no-cache \
   --pull \
-  -t linuxserver/quassel-web:latest .
+  -t ghcr.io/linuxserver/quassel-web:latest .
 ```
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
