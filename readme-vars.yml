@@ -18,7 +18,7 @@ available_architectures:
 param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "<path to data>", desc: "this will store config on the docker host" }
+  - { vol_path: "/config", vol_host_path: "/path/to/data", desc: "this will store config on the docker host" }
 param_usage_include_env: true
 param_env_vars:
   - { env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance" }
@@ -26,7 +26,7 @@ param_env_vars:
 
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "64080", internal_port: "64080", port_desc: "will map the container's port 64080 to port 64080 on the host" }
+  - { external_port: "64443", internal_port: "64443", port_desc: "Quassel-web https webui" }
 
 # optional container parameters
 opt_param_usage_include_env: true
@@ -36,13 +36,14 @@ opt_param_env_vars:
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  By default this container webui will be available on `http://$SERVER_IP:64080`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+  By default this container webui will be available on `http://$SERVER_IP:64443`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
   The configuration file using this method can be found at:
   ```
   /config/settings-user.js
   ```
 # changelog
 changelogs:
+  - { date: "12.02.22:", desc: "Rebasing to alpine 3.15." }
   - { date: "01.06.20:", desc: "Rebasing to alpine 3.12." }
   - { date: "19.12.19:", desc: "Rebasing to alpine 3.11." }
   - { date: "28.06.19:", desc: "Rebasing to alpine 3.10." }
