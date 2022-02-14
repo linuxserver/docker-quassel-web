@@ -60,7 +60,7 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-By default this container webui will be available on `http://$SERVER_IP:64443`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
 The configuration file using this method can be found at:
 ```
 /config/settings-user.js
