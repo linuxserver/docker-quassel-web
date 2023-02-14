@@ -1,10 +1,10 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # permissions function
 chownfiles () {
-    echo "[cont-init.d] setting file permissions this may take some time ..."
-    chown -R abc:abc \
-        /app/quassel-web \
+    lsiown -R abc:abc \
+        /app/quassel-web/public \
         /config
 }
 
@@ -14,16 +14,18 @@ QUASSEL_CORE \
 QUASSEL_PORT \
 )
 for i in "${VARS[@]}"; do
-    if [ -z ${!i+x} ]; then
-        echo "[cont-init.d] ${i} is required to setup container with env variables falling back to config file"
-        echo "[cont-init.d] You will need to manually modify /config/settings-user.js"
-        [[ ! -f /config/settings-user.js ]] && \
+    if [[ -z ${!i+x} ]]; then
+        echo "${i} is required to setup container with env variables falling back to config file"
+        echo "You will need to manually modify /config/settings-user.js"
+        if [[ ! -f /config/settings-user.js ]]; then
             cp -pr /app/quassel-web/settings.js /config/settings-user.js
+        fi
         chownfiles
         exit 0
     fi
 done
-echo "[cont-init.d] QUASSEL_CORE set, injecting env variables into settings.js"
+
+echo "QUASSEL_CORE set, injecting env variables into settings.js"
 cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
 # Env variable injection
     sed -i \
@@ -33,8 +35,10 @@ cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
         -e "s#mode:.*// can be 'http'#mode: 'http', // can be 'http'#g" \
         -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
         /app/quassel-web/settings-env.js && \
-[[ "${URL_BASE+x}" ]] && \
-    sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
+if [[ "${URL_BASE+x}" ]]; then
+    sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g"
     /app/quassel-web/settings-env.js
+fi
+
 # file permissions
 chownfiles
