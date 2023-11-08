@@ -28,7 +28,7 @@ RUN \
   cd /app/quassel-web && \
   npm install && \
   echo "**** cleanup ****" && \
-  cp /app/quassel-web/settings.js /defaults && \
+  cp /app/quassel-web/settings.cjs /defaults && \
   rm -rf \
     /root && \
   mkdir -p \

@@ -18,7 +18,7 @@ for i in "${VARS[@]}"; do
         echo "${i} is required to setup container with env variables falling back to config file"
         echo "You will need to manually modify /config/settings-user.js"
         if [[ ! -f /config/settings-user.js ]]; then
-            cp -pr /app/quassel-web/settings.js /config/settings-user.js
+            cp -pr /app/quassel-web/settings.cjs /config/settings-user.js
         fi
         chownfiles
         exit 0
@@ -26,7 +26,7 @@ for i in "${VARS[@]}"; do
 done
 
 echo "QUASSEL_CORE set, injecting env variables into settings.js"
-cp -pr /app/quassel-web/settings.js /app/quassel-web/settings-env.js
+cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.js
 # Env variable injection
     sed -i \
         -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
