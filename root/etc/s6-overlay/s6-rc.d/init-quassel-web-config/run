@@ -8,6 +8,11 @@ chownfiles () {
         /config
 }
 
+# Migrate from .js to .cjs
+if [[ -f /config/settings-user.js ]]; then
+    mv /config/settings-user.js /config/settings-user.cjs
+fi
+
 # env variable validation
 VARS=( \
 QUASSEL_CORE \
@@ -31,9 +36,6 @@ cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.cjs
     sed -i \
         -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
         -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
-        -e "s#forcedefault:.*//#forcedefault: true, //#g" \
-        -e "s#mode:.*// can be 'http'#mode: 'http', // can be 'http'#g" \
-        -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
         /app/quassel-web/settings-env.cjs && \
 if [[ "${URL_BASE+x}" ]]; then
     sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g"
