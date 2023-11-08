@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.17
+FROM ghcr.io/linuxserver/baseimage-alpine:3.18
 
 ARG BUILD_DATE
 ARG VERSION
@@ -28,7 +28,6 @@ RUN \
   cd /app/quassel-web && \
   npm install && \
   echo "**** cleanup ****" && \
-  cp /app/quassel-web/settings.cjs /defaults && \
   rm -rf \
     /root && \
   mkdir -p \

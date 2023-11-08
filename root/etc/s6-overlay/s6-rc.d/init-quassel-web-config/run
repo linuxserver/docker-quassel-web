@@ -16,17 +16,17 @@ QUASSEL_PORT \
 for i in "${VARS[@]}"; do
     if [[ -z ${!i+x} ]]; then
         echo "${i} is required to setup container with env variables falling back to config file"
-        echo "You will need to manually modify /config/settings-user.js"
-        if [[ ! -f /config/settings-user.js ]]; then
-            cp -pr /app/quassel-web/settings.cjs /config/settings-user.js
+        echo "You will need to manually modify /config/settings-user.cjs"
+        if [[ ! -f /config/settings-user.cjs ]]; then
+            cp -pr /app/quassel-web/settings.cjs /config/settings-user.cjs
         fi
         chownfiles
         exit 0
     fi
 done
 
-echo "QUASSEL_CORE set, injecting env variables into settings.js"
-cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.js
+echo "QUASSEL_CORE set, injecting env variables into settings.cjs"
+cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.cjs
 # Env variable injection
     sed -i \
         -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
@@ -34,10 +34,10 @@ cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.js
         -e "s#forcedefault:.*//#forcedefault: true, //#g" \
         -e "s#mode:.*// can be 'http'#mode: 'http', // can be 'http'#g" \
         -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
-        /app/quassel-web/settings-env.js && \
+        /app/quassel-web/settings-env.cjs && \
 if [[ "${URL_BASE+x}" ]]; then
     sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g"
-    /app/quassel-web/settings-env.js
+    /app/quassel-web/settings-env.cjs
 fi
 
 # file permissions
