@@ -28,9 +28,10 @@ opt_param_env_vars:
   - {env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`"}
 # application setup block
 app_setup_block_enabled: true
-app_setup_block: "By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. \nThe configuration file using this method can be found at:\n```\n/config/settings-user.js\n```\n"
+app_setup_block: "By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. \nThe configuration file using this method can be found at:\n```\n/config/settings-user.js\n```\n"
 # changelog
 changelogs:
+  - {date: "10.11.23:", desc: "Rebase to Alpine 3.18. Rename settings-user.js to .cjs to match upstream."}
   - {date: "06.07.23:", desc: "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"}
   - {date: "13.02.23:", desc: "Rebasing to Alpine 3.17, migrate to s6v3."}
   - {date: "12.02.22:", desc: "Rebasing to alpine 3.15."}
