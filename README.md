@@ -59,7 +59,7 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the envrionment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
 The configuration file using this method can be found at:
 ```
 /config/settings-user.js
@@ -305,6 +305,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **10.11.23:** - Rebase to Alpine 3.18. Rename settings-user.js to .cjs to match upstream.
 * **06.07.23:** - Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)
 * **13.02.23:** - Rebasing to Alpine 3.17, migrate to s6v3.
 * **12.02.22:** - Rebasing to alpine 3.15.
