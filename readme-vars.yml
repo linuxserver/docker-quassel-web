@@ -15,17 +15,18 @@ param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
   - {vol_path: "/config", vol_host_path: "/path/to/data", desc: "this will store config on the docker host"}
-param_usage_include_env: true
-param_env_vars:
-  - {env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance"}
-  - {env_var: "QUASSEL_PORT", env_value: "4242", desc: "specify the port of your Quassel Core instance"}
-param_usage_include_ports: true
-param_ports:
-  - {external_port: "64443", internal_port: "64443", port_desc: "Quassel-web https webui"}
-# optional container parameters
+param_usage_include_env: false
 opt_param_usage_include_env: true
 opt_param_env_vars:
+  - {env_var: "QUASSEL_CORE", env_value: "192.168.1.10", desc: "specify the URL or IP address of your Quassel Core instance"}
+  - {env_var: "QUASSEL_PORT", env_value: "4242", desc: "specify the port of your Quassel Core instance"}
+  - {env_var: "QUASSEL_HTTPS", env_value: "", desc: "Set to `true` to have Quassel web serve over https on port 64443 instead of http on port 64080."}
   - {env_var: "URL_BASE", env_value: "/quassel", desc: "Specify a url-base in reverse proxy setups ie. `/quassel`"}
+param_usage_include_ports: false
+opt_param_usage_include_ports: true
+opt_param_ports:
+  - {external_port: "64080", internal_port: "64080", port_desc: "Quassel-web http webui"}
+  - {external_port: "64443", internal_port: "64443", port_desc: "Quassel-web https webui"}
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: "By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. \nThe configuration file using this method can be found at:\n```\n/config/settings-user.js\n```\n"
