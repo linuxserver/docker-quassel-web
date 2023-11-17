@@ -9,6 +9,14 @@ fi
 
 export NODE_ENV=production
 
-exec \
-    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost 64443" \
-        cd /app/quassel-web s6-setuidgid abc node app.js --config "${CONFIG}"
+PORT=$(sed -n '/webserver: {/,/},/p' "${CONFIG}" | grep 'port:' | awk -F ':' '{print $2}' | cut -f1 -d ',' | tr -d '[:space:]')
+
+if [[ "${PORT}" != "null" ]]; then
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${PORT}" \
+            cd /app/quassel-web s6-setuidgid abc node app.js --config "${CONFIG}"
+else
+    cd /app/quassel-web || exit 1
+    exec \
+        s6-setuidgid abc node app.js --config "${CONFIG}"
+fi

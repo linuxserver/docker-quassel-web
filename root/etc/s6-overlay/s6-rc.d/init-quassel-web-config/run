@@ -33,13 +33,19 @@ done
 echo "QUASSEL_CORE set, injecting env variables into settings.cjs"
 cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.cjs
 # Env variable injection
-    sed -i \
-        -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
-        -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
-        /app/quassel-web/settings-env.cjs && \
+sed -i \
+    -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
+    -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
+    /app/quassel-web/settings-env.cjs && \
 if [[ "${URL_BASE+x}" ]]; then
     sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g"
     /app/quassel-web/settings-env.cjs
+fi
+if [[ -z "${QUASSEL_HTTPS}" ]]; then
+    sed -i \
+        -e "s#mode:.*// can be 'http'#mode: 'http', // can be 'http'#g" \
+        -e "s#port:.*// Port on which to listen#port: 64080, // Port on which to listen#g" \
+        /app/quassel-web/settings-env.cjs
 fi
 
 # file permissions
