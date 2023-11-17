@@ -16,7 +16,7 @@ if [[ "${PORT}" != "null" ]]; then
         s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${PORT}" \
             cd /app/quassel-web s6-setuidgid abc node app.js --config "${CONFIG}"
 else
-    cd /app/quassel-web || exit 1
     exec \
-        s6-setuidgid abc node app.js --config "${CONFIG}"
+        s6-notifyoncheck -d -n 300 -w 1000 -c "true" \
+            cd /app/quassel-web s6-setuidgid abc node app.js --config "${CONFIG}"
 fi
