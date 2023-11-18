@@ -38,7 +38,7 @@ sed -i \
     -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
     /app/quassel-web/settings-env.cjs && \
 if [[ "${URL_BASE+x}" ]]; then
-    sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g"
+    sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
     /app/quassel-web/settings-env.cjs
 fi
 if [[ -z "${QUASSEL_HTTPS}" ]]; then
