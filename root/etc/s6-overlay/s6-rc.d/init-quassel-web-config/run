@@ -36,7 +36,7 @@ cp -pr /app/quassel-web/settings.cjs /app/quassel-web/settings-env.cjs
 sed -i \
     -e "s#host:.*//#host: '${QUASSEL_CORE}', //#g" \
     -e "s#port:.*,// quasselcore#port: ${QUASSEL_PORT}, // quasselcore#g" \
-    /app/quassel-web/settings-env.cjs && \
+    /app/quassel-web/settings-env.cjs
 if [[ "${URL_BASE+x}" ]]; then
     sed -i "s#prefixpath:.*//#prefixpath: \'${URL_BASE}\', //#g" \
     /app/quassel-web/settings-env.cjs
