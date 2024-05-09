@@ -91,6 +91,7 @@ cacache                             17.1.0                  npm
 call-bind                           1.0.5                   npm                    
 callsites                           4.1.0                   npm                    
 caseless                            0.12.0                  npm                    
+catatonit                           0.1.7-r0                apk                    
 chalk                               4.1.2                   npm                    
 character-parser                    2.2.0                   npm                    
 chokidar                            3.5.3                   npm                    
