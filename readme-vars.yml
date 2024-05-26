@@ -14,7 +14,7 @@ available_architectures:
 param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
-  - {vol_path: "/config", vol_host_path: "/path/to/data", desc: "this will store config on the docker host"}
+  - {vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/data", desc: "this will store config on the docker host"}
 param_usage_include_env: false
 opt_param_usage_include_env: true
 opt_param_env_vars:
@@ -32,6 +32,7 @@ app_setup_block_enabled: true
 app_setup_block: "By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. \nThe configuration file using this method can be found at:\n```\n/config/settings-user.js\n```\n"
 # changelog
 changelogs:
+  - {date: "25.05.24:", desc: "Rebase to Alpine 3.20."}
   - {date: "10.11.23:", desc: "Rebase to Alpine 3.18. Rename settings-user.js to .cjs to match upstream."}
   - {date: "06.07.23:", desc: "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"}
   - {date: "13.02.23:", desc: "Rebasing to Alpine 3.17, migrate to s6v3."}

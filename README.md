@@ -91,7 +91,7 @@ services:
       - QUASSEL_HTTPS= #optional
       - URL_BASE=/quassel #optional
     volumes:
-      - /path/to/data:/config
+      - /path/to/quassel-web/data:/config
     ports:
       - 64080:64080 #optional
       - 64443:64443 #optional
@@ -112,7 +112,7 @@ docker run -d \
   -e URL_BASE=/quassel `#optional` \
   -p 64080:64080 `#optional` \
   -p 64443:64443 `#optional` \
-  -v /path/to/data:/config \
+  -v /path/to/quassel-web/data:/config \
   --restart unless-stopped \
   lscr.io/linuxserver/quassel-web:latest
 ```
@@ -295,6 +295,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **25.05.24:** - Rebase to Alpine 3.20.
 * **10.11.23:** - Rebase to Alpine 3.18. Rename settings-user.js to .cjs to match upstream.
 * **06.07.23:** - Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)
 * **13.02.23:** - Rebasing to Alpine 3.17, migrate to s6v3.
