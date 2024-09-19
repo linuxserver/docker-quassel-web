@@ -118,7 +118,7 @@ coreutils-fmt                       9.5-r1                 apk
 coreutils-sha512sum                 9.5-r1                 apk                    
 cross-spawn                         7.0.3                  npm                    
 cssesc                              3.0.0                  npm                    
-curl                                8.9.1-r1               apk                    
+curl                                8.10.0-r0              apk                    
 dashdash                            1.14.1                 npm                    
 debug                               2.6.9                  npm   (+4 duplicates)  
 debug                               3.2.7                  npm   (+1 duplicate)   
@@ -236,12 +236,12 @@ libacl                              2.3.2-r0               apk
 libattr                             2.5.2-r0               apk                    
 libbsd                              0.12.2-r0              apk                    
 libcrypto3                          3.3.2-r0               apk                    
-libcurl                             8.9.1-r1               apk                    
+libcurl                             8.10.0-r0              apk                    
 libgcc                              13.2.1_git20240309-r0  apk                    
 libidn2                             2.3.7-r0               apk                    
 libintl                             0.22.5-r0              apk                    
 libmd                               1.1.0-r0               apk                    
-libncursesw                         6.4_p20240420-r0       apk                    
+libncursesw                         6.4_p20240420-r1       apk                    
 libnpmaccess                        8.0.6                  npm                    
 libnpmdiff                          6.1.2                  npm                    
 libnpmexec                          8.1.1                  npm                    
@@ -296,7 +296,7 @@ musl                                1.2.5-r0               apk
 musl-utils                          1.2.5-r0               apk                    
 mute-stream                         1.0.0                  npm                    
 mylib                               0.0.0                  npm                    
-ncurses-terminfo-base               6.4_p20240420-r0       apk                    
+ncurses-terminfo-base               6.4_p20240420-r1       apk                    
 needle                              3.2.0                  npm                    
 negotiator                          0.6.3                  npm   (+1 duplicate)   
 netcat-openbsd                      1.226-r0               apk                    
