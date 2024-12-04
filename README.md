@@ -59,13 +59,13 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. 
+By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others.
 The configuration file using this method can be found at:
-```
+
+```text
 /config/settings-user.js
 ```
 
- 
 ### Strict reverse proxies
 
 This image uses a self-signed certificate by default. This naturally means the scheme is `https`.
@@ -74,6 +74,9 @@ If you are using a reverse proxy which validates certificates, you need to [disa
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
