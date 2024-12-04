@@ -4,7 +4,7 @@
 project_name: quassel-web
 project_url: "https://github.com/magne4000/quassel-webserver"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/quassel-web-banner.png"
-project_blurb: "[{{ project_name|capitalize }}]({{ project_url }}) is a web client for Quassel.  Note that a Quassel-Core instance is required, we have a container available [here.](https://hub.docker.com/r/linuxserver/quassel-core/) \n"
+project_blurb: "[{{ project_name|capitalize }}]({{ project_url }}) is a web client for Quassel.  Note that a Quassel-Core instance is required, we have a container available [here.](https://hub.docker.com/r/linuxserver/quassel-core/)"
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 # supported architectures
 available_architectures:
@@ -29,7 +29,13 @@ opt_param_ports:
   - {external_port: "64443", internal_port: "64443", port_desc: "Quassel-web https webui"}
 # application setup block
 app_setup_block_enabled: true
-app_setup_block: "By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others. \nThe configuration file using this method can be found at:\n```\n/config/settings-user.js\n```\n"
+app_setup_block: |
+  By default this container webui will be available on `https://$SERVER_IP:64443`. To setup this container you can either use the environment variables we recommend or manually setup the configuration file by leaving out the `QUASSEL_CORE` environment variable among others.
+  The configuration file using this method can be found at:
+
+  ```text
+  /config/settings-user.js
+  ```
 # changelog
 changelogs:
   - {date: "25.05.24:", desc: "Rebase to Alpine 3.20."}
